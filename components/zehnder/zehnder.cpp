@@ -114,7 +114,7 @@ void ZehnderRF::setup() {
   // // RX power normal
   rfConfig.rx_power = nrf905::PowerNormal;
 
-  rfConfig.rx_address = 0xFE75FD9B;  // ZEHNDER_NETWORK_LINK_ID;
+  rfConfig.rx_address = 0x89816EA9;  // ZEHNDER_NETWORK_LINK_ID;
   rfConfig.rx_address_width = 4;
   rfConfig.rx_payload_width = 16;
 
@@ -127,7 +127,7 @@ void ZehnderRF::setup() {
 
   // Write config back
   this->rf_->updateConfig(&rfConfig);
-  this->rf_->writeTxAddress(0xFE75FD9B);
+  this->rf_->writeTxAddress(0x89816EA9);
 
   this->speed_count_ = 4;
 
@@ -239,10 +239,8 @@ void ZehnderRF::rfHandleReceived(const uint8_t *const pData, const uint8_t dataL
           (void) memset(this->_txFrame, 0, FAN_FRAMESIZE);  // Clear frame data
 
           // Found a main unit, so send a join request
-          //pTxFrame->rx_type = FAN_TYPE_MAIN_UNIT;  // Set type to main unit
-          pTxFrame->rx_type = 0x04;  // Set type to main unit
-          //pTxFrame->rx_id = pResponse->tx_id;      // Set ID to the ID of the main unit
-          pTxFrame->rx_id = 0x00;
+          pTxFrame->rx_type = FAN_TYPE_MAIN_UNIT;  // Set type to main unit
+          pTxFrame->rx_id = pResponse->tx_id;      // Set ID to the ID of the main unit
           pTxFrame->tx_type = this->config_.fan_my_device_type;
           pTxFrame->tx_id = this->config_.fan_my_device_id;
           pTxFrame->ttl = FAN_TTL;
@@ -274,8 +272,6 @@ void ZehnderRF::rfHandleReceived(const uint8_t *const pData, const uint8_t dataL
         default:
           ESP_LOGD(TAG, "Discovery: Received unknown frame type 0x%02X from ID 0x%02X", pResponse->command,
                    pResponse->tx_id);
-          ESP_LOGD(TAG, "Debug: rx_type 0x%02X, rx_id 0x%02X, tx_type 0x%02X, tx_id 0x%02X", pResponse->rx_type, pResponse->rx_id, pResponse->tx_type, pResponse->tx_id);
-
           break;
       }
       break;
@@ -313,16 +309,12 @@ void ZehnderRF::rfHandleReceived(const uint8_t *const pData, const uint8_t dataL
           } else {
             ESP_LOGE(TAG, "Discovery: Received unknown link success from ID 0x%02X on network 0x%08X", pResponse->tx_id,
                      this->config_.fan_networkId);
-            ESP_LOGE(TAG, "Debug: rx_type 0x%02X, rx_id 0x%02X, tx_type 0x%02X, tx_id 0x%02X", pResponse->rx_type, pResponse->rx_id, pResponse->tx_type, pResponse->tx_id);
-
           }
           break;
 
         default:
           ESP_LOGE(TAG, "Discovery: Received unknown frame type 0x%02X from ID 0x%02X", pResponse->command,
                    pResponse->tx_id);
-          ESP_LOGE(TAG, "Debug: rx_type 0x%02X, rx_id 0x%02X, tx_type 0x%02X, tx_id 0x%02X", pResponse->rx_type, pResponse->rx_id, pResponse->tx_type, pResponse->tx_id);
-
           break;
       }
       break;
@@ -352,8 +344,6 @@ void ZehnderRF::rfHandleReceived(const uint8_t *const pData, const uint8_t dataL
         default:
           ESP_LOGE(TAG, "Discovery: Received unknown frame type 0x%02X from ID 0x%02X on network 0x%08X",
                    pResponse->command, pResponse->tx_id, this->config_.fan_networkId);
-          ESP_LOGE(TAG, "Debug: rx_type 0x%02X, rx_id 0x%02X, tx_type 0x%02X, tx_id 0x%02X", pResponse->rx_type, pResponse->rx_id, pResponse->tx_type, pResponse->tx_id);
-
           break;
       }
       break;
@@ -433,8 +423,6 @@ void ZehnderRF::rfHandleReceived(const uint8_t *const pData, const uint8_t dataL
       } else {
         ESP_LOGD(TAG, "Received frame from unknown device; type 0x%02X from ID 0x%02X type 0x%02X", pResponse->command,
                  pResponse->tx_id, pResponse->tx_type);
-        ESP_LOGD(TAG, "Debug: rx_type 0x%02X, rx_id 0x%02X, tx_type 0x%02X, tx_id 0x%02X", pResponse->rx_type, pResponse->rx_id, pResponse->tx_type, pResponse->tx_id);
-
       }
       break;
 
@@ -546,8 +534,7 @@ void ZehnderRF::discoveryStart(const uint8_t deviceId) {
 
   ESP_LOGD(TAG, "Start discovery with ID %u", deviceId);
 
-  //this->config_.fan_my_device_type = FAN_TYPE_REMOTE_CONTROL;
-  this->config_.fan_my_device_type = 0x0F;
+  this->config_.fan_my_device_type = FAN_TYPE_REMOTE_CONTROL;
   this->config_.fan_my_device_id = deviceId;
 
   // Build frame
