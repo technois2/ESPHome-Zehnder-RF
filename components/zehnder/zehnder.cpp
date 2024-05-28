@@ -280,7 +280,7 @@ void ZehnderRF::rfHandleReceived(const uint8_t *const pData, const uint8_t dataL
       ESP_LOGD(TAG, "DiscoverStateWaitForJoinResponse");
       switch (pResponse->command) {
         case FAN_FRAME_0B:
-ESPLOGD(TAG, "tx_type 0x%02X rx_type 0x%02X rx_id 0x%02X", pResponse->tx_type, pResponse->rx_type, pResponse->rx_id);
+ESP_LOGD(TAG, "tx_type 0x%02X rx_type 0x%02X rx_id 0x%02X", pResponse->tx_type, pResponse->rx_type, pResponse->rx_id);
 
           if ((pResponse->rx_type == this->config_.fan_my_device_type) &&
               (pResponse->rx_id == this->config_.fan_my_device_id) &&
