@@ -239,7 +239,7 @@ void ZehnderRF::rfHandleReceived(const uint8_t *const pData, const uint8_t dataL
           (void) memset(this->_txFrame, 0, FAN_FRAMESIZE);  // Clear frame data
 
           // Found a main unit, so send a join request
-          pTxFrame->rx_type = 0x01;  // Set type to main unit
+          pTxFrame->rx_type = 0x0E;  // Set type to main unit
           pTxFrame->rx_id = pResponse->tx_id;      // Set ID to the ID of the main unit
           pTxFrame->tx_type = this->config_.fan_my_device_type;
           pTxFrame->tx_id = this->config_.fan_my_device_id;
@@ -270,7 +270,7 @@ void ZehnderRF::rfHandleReceived(const uint8_t *const pData, const uint8_t dataL
           break;
 
         default:
-          ESP_LOGD(TAG, "StateDiscoveryWaitForLinkRequest: Received unknown frame type 0x%02X from ID 0x%02X", pResponse->command,
+          ESP_LOGE(TAG, "StateDiscoveryWaitForLinkRequest: Received unknown frame type 0x%02X from ID 0x%02X", pResponse->command,
                    pResponse->tx_id);
           break;
       }
@@ -280,7 +280,7 @@ void ZehnderRF::rfHandleReceived(const uint8_t *const pData, const uint8_t dataL
       ESP_LOGD(TAG, "DiscoverStateWaitForJoinResponse");
       switch (pResponse->command) {
         case FAN_FRAME_0B:
-ESP_LOGD(TAG, "tx_type 0x%02X rx_type 0x%02X rx_id 0x%02X", pResponse->tx_type, pResponse->rx_type, pResponse->rx_id);
+ESP_LOGE(TAG, "tx_type 0x%02X rx_type 0x%02X rx_id 0x%02X", pResponse->tx_type, pResponse->rx_type, pResponse->rx_id);
 
           if ((pResponse->rx_type == this->config_.fan_my_device_type) &&
               (pResponse->rx_id == this->config_.fan_my_device_id) &&
@@ -344,7 +344,7 @@ ESP_LOGD(TAG, "tx_type 0x%02X rx_type 0x%02X rx_id 0x%02X", pResponse->tx_type, 
           break;
 
         default:
-          ESP_LOGE(TAG, "Discovery: Received unknown frame type 0x%02X from ID 0x%02X on network 0x%08X",
+          ESP_LOGE(TAG, "StateDiscoveryJoinComplete: Received unknown frame type 0x%02X from ID 0x%02X on network 0x%08X",
                    pResponse->command, pResponse->tx_id, this->config_.fan_networkId);
           break;
       }
@@ -429,7 +429,7 @@ ESP_LOGD(TAG, "tx_type 0x%02X rx_type 0x%02X rx_id 0x%02X", pResponse->tx_type, 
       break;
 
     default:
-      ESP_LOGD(TAG, "Received frame from unknown device in unknown state; type 0x%02X from ID 0x%02X type 0x%02X",
+      ESP_LOGD(TAG, "default: Received frame from unknown device in unknown state; type 0x%02X from ID 0x%02X type 0x%02X",
                pResponse->command, pResponse->tx_id, pResponse->tx_type);
       break;
   }
