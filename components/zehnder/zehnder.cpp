@@ -293,9 +293,9 @@ ESP_LOGE(TAG, "tx_type 0x%02X rx_type 0x%02X rx_id 0x%02X", pResponse->tx_type, 
 
             (void) memset(this->_txFrame, 0, FAN_FRAMESIZE);  // Clear frame data
 
-            pTxFrame->rx_type = FAN_TYPE_MAIN_UNIT;  // Set type to main unit
+            pTxFrame->rx_type = 0xE;  // Set type to main unit
             pTxFrame->rx_id = pResponse->tx_id;      // Set ID to the ID of the main unit
-            pTxFrame->tx_type = this->config_.fan_my_device_type;
+            pTxFrame->tx_type = 0x03;
             pTxFrame->tx_id = this->config_.fan_my_device_id;
             pTxFrame->ttl = FAN_TTL;
             pTxFrame->command = FAN_FRAME_0B;  // 0x0B acknowledge link successful
@@ -315,6 +315,7 @@ ESP_LOGE(TAG, "tx_type 0x%02X rx_type 0x%02X rx_id 0x%02X", pResponse->tx_type, 
           break;
 
         default:
+        
           ESP_LOGE(TAG, "DiscoverStateWaitForJoinResponse: Received unknown frame type 0x%02X from ID 0x%02X", pResponse->command,
                    pResponse->tx_id);
           break;
@@ -346,6 +347,7 @@ ESP_LOGE(TAG, "tx_type 0x%02X rx_type 0x%02X rx_id 0x%02X", pResponse->tx_type, 
         default:
           ESP_LOGE(TAG, "StateDiscoveryJoinComplete: Received unknown frame type 0x%02X from ID 0x%02X on network 0x%08X",
                    pResponse->command, pResponse->tx_id, this->config_.fan_networkId);
+          ESP_LOGE(TAG, "StateDiscoveryJoinComplete tx_type 0x%02X rx_type 0x%02X rx_id 0x%02X", pResponse->tx_type, pResponse->rx_type, pResponse->rx_id);                   
           break;
       }
       break;
