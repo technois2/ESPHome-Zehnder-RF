@@ -349,7 +349,7 @@ ESP_LOGE(TAG, "tx_type 0x%02X rx_type 0x%02X rx_id 0x%02X", pResponse->tx_type, 
       //              pResponse->command, pResponse->tx_id, this->config_.fan_networkId);
       //     ESP_LOGE(TAG, "StateDiscoveryJoinComplete tx_type 0x%02X rx_type 0x%02X rx_id 0x%02X", pResponse->tx_type, pResponse->rx_type, pResponse->rx_id);                   
       //     break;
-      }
+      
        this->rfComplete();
 
         ESP_LOGD(TAG, "Saving pairing config");
