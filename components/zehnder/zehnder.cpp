@@ -114,7 +114,7 @@ void ZehnderRF::setup() {
   // // RX power normal
   rfConfig.rx_power = nrf905::PowerNormal;
 
-  rfConfig.rx_address = 0x89816EA9;  // ZEHNDER_NETWORK_LINK_ID;
+  rfConfig.rx_address = 0xFE75FD9B;  // ZEHNDER_NETWORK_LINK_ID;
   rfConfig.rx_address_width = 4;
   rfConfig.rx_payload_width = 16;
 
@@ -127,7 +127,7 @@ void ZehnderRF::setup() {
 
   // Write config back
   this->rf_->updateConfig(&rfConfig);
-  this->rf_->writeTxAddress(0x89816EA9);
+  this->rf_->writeTxAddress(0xFE75FD9B);
 
   this->speed_count_ = 4;
 
@@ -171,12 +171,12 @@ void ZehnderRF::loop(void) {
       // Wait until started up
       if (millis() > 15000) {
         // Discovery?
-        if ((this->config_.fan_networkId == 0x00000000) || (this->config_.fan_my_device_type == 0) ||
-            (this->config_.fan_my_device_id == 0) || (this->config_.fan_main_unit_type == 0) ||
-            (this->config_.fan_main_unit_id == 0)) {
-          ESP_LOGD(TAG, "Invalid config, start paring");
+        // if ((this->config_.fan_networkId == 0x00000000) || (this->config_.fan_my_device_type == 0) ||
+        //     (this->config_.fan_my_device_id == 0) || (this->config_.fan_main_unit_type == 0) ||
+        //     (this->config_.fan_main_unit_id == 0)) {
+        //   ESP_LOGD(TAG, "Invalid config, start paring");
 
-          this->state_ = StateStartDiscovery;
+          // this->state_ = StateStartDiscovery;
         } else {
           ESP_LOGD(TAG, "Config data valid, start polling");
 
@@ -309,6 +309,8 @@ void ZehnderRF::rfHandleReceived(const uint8_t *const pData, const uint8_t dataL
           } else {
             ESP_LOGE(TAG, "Discovery: Received unknown link success from ID 0x%02X on network 0x%08X", pResponse->tx_id,
                      this->config_.fan_networkId);
+            ESP_LOGE(TAG, "Debug: rx_type 0x%02X, rx_id 0x%02X, tx_type 0x%02X, tx_id 0x%02X", pResponse->rx_type, pResponse->rx_id, Response->tx_type, pResponse->tx_id);
+
           }
           break;
 
