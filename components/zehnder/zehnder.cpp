@@ -171,12 +171,12 @@ void ZehnderRF::loop(void) {
       // Wait until started up
       if (millis() > 15000) {
         // Discovery?
-        // if ((this->config_.fan_networkId == 0x00000000) || (this->config_.fan_my_device_type == 0) ||
-        //     (this->config_.fan_my_device_id == 0) || (this->config_.fan_main_unit_type == 0) ||
-        //     (this->config_.fan_main_unit_id == 0)) {
-        //   ESP_LOGD(TAG, "Invalid config, start paring");
+        if ((this->config_.fan_networkId == 0x00000000) || (this->config_.fan_my_device_type == 0) ||
+            (this->config_.fan_my_device_id == 0) || (this->config_.fan_main_unit_type == 0) ||
+            (this->config_.fan_main_unit_id == 0)) {
+          ESP_LOGD(TAG, "Invalid config, start paring");
 
-          // this->state_ = StateStartDiscovery;
+          this->state_ = StateStartDiscovery;
         } else {
           ESP_LOGD(TAG, "Config data valid, start polling");
 
