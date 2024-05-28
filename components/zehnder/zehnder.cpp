@@ -431,6 +431,8 @@ void ZehnderRF::rfHandleReceived(const uint8_t *const pData, const uint8_t dataL
       } else {
         ESP_LOGD(TAG, "Received frame from unknown device; type 0x%02X from ID 0x%02X type 0x%02X", pResponse->command,
                  pResponse->tx_id, pResponse->tx_type);
+        ESP_LOGD(TAG, "Debug: rx_type 0x%02X, rx_id 0x%02X, tx_type 0x%02X, tx_id 0x%02X", pResponse->rx_type, pResponse->rx_id, pResponse->tx_type, pResponse->tx_id);
+
       }
       break;
 
