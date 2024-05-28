@@ -240,7 +240,8 @@ void ZehnderRF::rfHandleReceived(const uint8_t *const pData, const uint8_t dataL
 
           // Found a main unit, so send a join request
           pTxFrame->rx_type = FAN_TYPE_MAIN_UNIT;  // Set type to main unit
-          pTxFrame->rx_id = pResponse->tx_id;      // Set ID to the ID of the main unit
+          //pTxFrame->rx_id = pResponse->tx_id;      // Set ID to the ID of the main unit
+          pTxFrame->rx_id = 0x00;
           pTxFrame->tx_type = this->config_.fan_my_device_type;
           pTxFrame->tx_id = this->config_.fan_my_device_id;
           pTxFrame->ttl = FAN_TTL;
@@ -544,7 +545,8 @@ void ZehnderRF::discoveryStart(const uint8_t deviceId) {
 
   ESP_LOGD(TAG, "Start discovery with ID %u", deviceId);
 
-  this->config_.fan_my_device_type = FAN_TYPE_REMOTE_CONTROL;
+  //this->config_.fan_my_device_type = FAN_TYPE_REMOTE_CONTROL;
+  this->config_.fan_my_device_type = 0x0F;
   this->config_.fan_my_device_id = deviceId;
 
   // Build frame
