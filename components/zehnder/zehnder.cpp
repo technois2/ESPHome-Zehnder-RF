@@ -282,7 +282,7 @@ void ZehnderRF::rfHandleReceived(const uint8_t *const pData, const uint8_t dataL
         case FAN_FRAME_0B:
 ESP_LOGE(TAG, "tx_type 0x%02X rx_type 0x%02X rx_id 0x%02X", pResponse->tx_type, pResponse->rx_type, pResponse->rx_id);
 
-          if ((pResponse->rx_type == this->config_.fan_my_device_type) &&
+          if ((pResponse->rx_type == 0x03) &&
               (pResponse->rx_id == this->config_.fan_my_device_id) &&
               (pResponse->tx_type == 0x0E) &&
               (pResponse->tx_id == this->config_.fan_main_unit_id)) {
