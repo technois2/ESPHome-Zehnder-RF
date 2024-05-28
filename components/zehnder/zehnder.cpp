@@ -309,7 +309,7 @@ void ZehnderRF::rfHandleReceived(const uint8_t *const pData, const uint8_t dataL
           } else {
             ESP_LOGE(TAG, "Discovery: Received unknown link success from ID 0x%02X on network 0x%08X", pResponse->tx_id,
                      this->config_.fan_networkId);
-            ESP_LOGE(TAG, "Debug: rx_type 0x%02X, rx_id 0x%02X, tx_type 0x%02X, tx_id 0x%02X", pResponse->rx_type, pResponse->rx_id, Response->tx_type, pResponse->tx_id);
+            ESP_LOGE(TAG, "Debug: rx_type 0x%02X, rx_id 0x%02X, tx_type 0x%02X, tx_id 0x%02X", pResponse->rx_type, pResponse->rx_id, pResponse->tx_type, pResponse->tx_id);
 
           }
           break;
