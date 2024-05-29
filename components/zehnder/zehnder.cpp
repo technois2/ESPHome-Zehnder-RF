@@ -476,7 +476,7 @@ void ZehnderRF::queryDevice(void) {
   //pFrame->rx_type = this->config_.fan_main_unit_type;
   pFrame->rx_type = FAN_TYPE_MAIN_UNIT;
   pFrame->rx_id = this->config_.fan_main_unit_id;
-  pFrame->tx_type = this->config_.fan_my_device_type;
+  pFrame->tx_type = 0x03;
   pFrame->tx_id = this->config_.fan_my_device_id;
   pFrame->ttl = FAN_TTL;
   pFrame->command = FAN_TYPE_QUERY_DEVICE;
