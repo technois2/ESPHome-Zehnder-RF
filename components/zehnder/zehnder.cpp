@@ -297,7 +297,7 @@ ESP_LOGE(TAG, "tx_type 0x%02X rx_type 0x%02X rx_id 0x%02X", pResponse->tx_type, 
 
             (void) memset(this->_txFrame, 0, FAN_FRAMESIZE);  // Clear frame data
 
-            pTxFrame->rx_type = 0x0E;  // Set type to main unit
+            pTxFrame->rx_type = 0x01;  // Set type to main unit
             pTxFrame->rx_id = pResponse->tx_id;      // Set ID to the ID of the main unit
             pTxFrame->tx_type = 0x03;
             pTxFrame->tx_id = this->config_.fan_my_device_id;
