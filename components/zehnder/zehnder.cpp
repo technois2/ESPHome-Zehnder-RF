@@ -476,10 +476,10 @@ void ZehnderRF::queryDevice(void) {
   //pFrame->rx_type = this->config_.fan_main_unit_type;
   pFrame->rx_type = FAN_TYPE_MAIN_UNIT;
   pFrame->rx_id = FAN_TYPE_BROADCAST;
-  pFrame->tx_type = 0x03;
+  pFrame->tx_type = 0x0F;
   pFrame->tx_id = this->config_.fan_my_device_id;
   pFrame->ttl = FAN_TTL;
-  pFrame->command = FAN_TYPE_QUERY_DEVICE;
+  pFrame->command = FAN_TYPE_QUERY_NETWORK;
   pFrame->parameter_count = 0x00;  // No parameters
 
   this->startTransmit(this->_txFrame, FAN_TX_RETRIES, [this]() {
