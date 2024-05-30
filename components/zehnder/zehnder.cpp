@@ -327,31 +327,31 @@ ESP_LOGE(TAG, "tx_type 0x%02X rx_type 0x%02X rx_id 0x%02X", pResponse->tx_type, 
 
     case StateDiscoveryJoinComplete:
       ESP_LOGD(TAG, "StateDiscoveryJoinComplete");
-      // switch (pResponse->command) {
-      //   case FAN_TYPE_QUERY_NETWORK:
-      //     if ((pResponse->rx_type == this->config_.fan_main_unit_type) &&
-      //         (pResponse->rx_id == this->config_.fan_main_unit_id) &&
-      //         (pResponse->tx_type == this->config_.fan_main_unit_type) &&
-      //         (pResponse->tx_id == this->config_.fan_main_unit_id)) {
-      //       ESP_LOGD(TAG, "Discovery: received network join success 0x0D");
+      switch (pResponse->command) {
+        case FAN_TYPE_QUERY_NETWORK:
+          if ((pResponse->rx_type == this->config_.fan_main_unit_type) &&
+              (pResponse->rx_id == this->config_.fan_main_unit_id) &&
+              (pResponse->tx_type == this->config_.fan_main_unit_type) &&
+              (pResponse->tx_id == this->config_.fan_main_unit_id)) {
+            ESP_LOGD(TAG, "Discovery: received network join success 0x0D");
 
-      //       this->rfComplete();
+            this->rfComplete();
 
-      //       ESP_LOGD(TAG, "Saving pairing config");
-      //       this->pref_.save(&this->config_);
+            ESP_LOGD(TAG, "Saving pairing config");
+            this->pref_.save(&this->config_);
 
-      //       this->state_ = StateIdle;
-      //     } else {
-      //       ESP_LOGW(TAG, "Unexpected frame join reponse from Type 0x%02X ID 0x%02X", pResponse->tx_type,
-      //                pResponse->tx_id);
-      //     }
-      //     break;
+            this->state_ = StateIdle;
+          } else {
+            ESP_LOGW(TAG, "Unexpected frame join reponse from Type 0x%02X ID 0x%02X", pResponse->tx_type,
+                     pResponse->tx_id);
+          }
+          break;
 
-      //   default:
-      //     ESP_LOGE(TAG, "StateDiscoveryJoinComplete: Received unknown frame type 0x%02X from ID 0x%02X on network 0x%08X",
-      //              pResponse->command, pResponse->tx_id, this->config_.fan_networkId);
-      //     ESP_LOGE(TAG, "StateDiscoveryJoinComplete tx_type 0x%02X rx_type 0x%02X rx_id 0x%02X", pResponse->tx_type, pResponse->rx_type, pResponse->rx_id);                   
-      //     break;
+        default:
+          ESP_LOGE(TAG, "StateDiscoveryJoinComplete: Received unknown frame type 0x%02X from ID 0x%02X on network 0x%08X",
+                   pResponse->command, pResponse->tx_id, this->config_.fan_networkId);
+          ESP_LOGE(TAG, "StateDiscoveryJoinComplete tx_type 0x%02X rx_type 0x%02X rx_id 0x%02X", pResponse->tx_type, pResponse->rx_type, pResponse->rx_id);                   
+          break;
       
        this->rfComplete();
 
