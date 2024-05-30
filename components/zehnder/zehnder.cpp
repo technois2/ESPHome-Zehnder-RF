@@ -179,15 +179,15 @@ void ZehnderRF::loop(void) {
           this->state_ = StateStartDiscovery;
         } else {
           this->state_ = StateStartDiscovery; // temp
-          ESP_LOGD(TAG, "Config data valid, start polling");
+          // ESP_LOGD(TAG, "Config data valid, start polling");
 
-          rfConfig = this->rf_->getConfig();
-          rfConfig.rx_address = this->config_.fan_networkId;
-          this->rf_->updateConfig(&rfConfig);
-          this->rf_->writeTxAddress(this->config_.fan_networkId);
+          // rfConfig = this->rf_->getConfig();
+          // rfConfig.rx_address = this->config_.fan_networkId;
+          // this->rf_->updateConfig(&rfConfig);
+          // this->rf_->writeTxAddress(this->config_.fan_networkId);
 
-          // Start with query
-          this->queryDevice();
+          // // Start with query
+          // this->queryDevice();
         }
       }
       break;
