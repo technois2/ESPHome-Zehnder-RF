@@ -355,6 +355,8 @@ ESP_LOGE(TAG, "tx_type 0x%02X rx_type 0x%02X rx_id 0x%02X", pResponse->tx_type, 
       break;
 
     case StateWaitQueryResponse:
+
+      ESP_LOGV(TAG, "CASE STATE: StateWaitQueryResponse");
       if ((pResponse->rx_type == this->config_.fan_my_device_type) &&  // If type
           (pResponse->rx_id == this->config_.fan_my_device_id)) {      // and id match, it is for us
         switch (pResponse->command) {
@@ -472,8 +474,8 @@ void ZehnderRF::queryDevice(void) {
 
   // Build frame
   //pFrame->rx_type = this->config_.fan_main_unit_type;
-  pFrame->rx_type = 0x01;
-  pFrame->rx_id = 0x00;
+  pFrame->rx_type = FAN_TYPE_MAIN_UNIT;
+  pFrame->rx_id = FAN_TYPE_BROADCAST;
   pFrame->tx_type = 0x03;
   pFrame->tx_id = this->config_.fan_my_device_id;
   pFrame->ttl = FAN_TTL;
