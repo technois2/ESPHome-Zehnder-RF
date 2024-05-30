@@ -225,6 +225,9 @@ void ZehnderRF::rfHandleReceived(const uint8_t *const pData, const uint8_t dataL
   nrf905::Config rfConfig;
 
   ESP_LOGD(TAG, "Current state: 0x%02X", this->state_);
+  ESP_LOGE(TAG, "command 0x%02X tx_type 0x%02X rx_type 0x%02X rx_id 0x%02X", pResponse->command, pResponse->tx_type, pResponse->rx_type, pResponse->rx_id);
+
+
   switch (this->state_) {
     case StateDiscoveryWaitForLinkRequest:
       ESP_LOGD(TAG, "DiscoverStateWaitForLinkRequest");
