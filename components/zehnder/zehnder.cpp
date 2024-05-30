@@ -384,6 +384,7 @@ ESP_LOGE(TAG, "tx_type 0x%02X rx_type 0x%02X rx_id 0x%02X", pResponse->tx_type, 
       break;
 
     case StateWaitSetSpeedResponse:
+     ESP_LOGE(TAG, "StateWaitSetSpeedResponse command 0x%02X tx_type 0x%02X rx_type 0x%02X rx_id 0x%02X", pResponse->command, pResponse->tx_type, pResponse->rx_type, pResponse->rx_id);
       if ((pResponse->rx_type == this->config_.fan_my_device_type) &&  // If type
           (pResponse->rx_id == this->config_.fan_my_device_id)) {      // and id match, it is for us
         switch (pResponse->command) {
@@ -397,7 +398,7 @@ ESP_LOGE(TAG, "tx_type 0x%02X rx_type 0x%02X rx_id 0x%02X", pResponse->tx_type, 
 
             (void) memset(this->_txFrame, 0, FAN_FRAMESIZE);  // Clear frame data
 
-            pTxFrame->rx_type = this->config_.fan_main_unit_type;  // Set type to main unit
+            pTxFrame->rx_type = 0x01;  // Set type to main unit
             pTxFrame->rx_id = this->config_.fan_main_unit_id;      // Set ID to the ID of the main unit
             pTxFrame->tx_type = this->config_.fan_my_device_type;
             pTxFrame->tx_id = this->config_.fan_my_device_id;
