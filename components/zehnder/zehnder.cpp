@@ -178,6 +178,7 @@ void ZehnderRF::loop(void) {
 
           this->state_ = StateStartDiscovery;
         } else {
+          this->state_ = StateStartDiscovery; // temp
           ESP_LOGD(TAG, "Config data valid, start polling");
 
           rfConfig = this->rf_->getConfig();
